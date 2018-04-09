@@ -127,7 +127,8 @@ export default {
         sender: '',
         receiver_org: '',
         receiver: '',
-        type: false
+        type: false,
+        page:'1'
       },
       tableData: [],
       tableVisibleData: [],
@@ -180,9 +181,9 @@ export default {
     getData() {
       this.axios.post(this.api + '/selectmsg', this.form).then((response) => {
         console.log(response.data);
-        this.tableData = response.data.data;
-        this.total = response.data.data.length;
-        this.setVisibleData();
+        this.tableVisibleData = response.data.data;
+        this.total = response.data.number;
+        // this.setVisibleData();
       })
     },
     handleSelectionChange() {
@@ -218,19 +219,20 @@ export default {
       })
     },
     handleCurrentChange(val) {
-      this.cur_page = val;
+      this.form.page = val
+      this.getData()
     },
-    setVisibleData() {
-      var start = 10 * (this.cur_page - 1) + 1;
-      var end = 10 * this.cur_page;
-      var data = []
-      for (let i = 0; i < this.tableData.length; i++) {
-        if (i >= (start - 1) && i <= (end - 1)) {
-          data.push(this.tableData[i])
-        }
-      }
-      this.tableVisibleData = data;
-    },
+    // setVisibleData() {
+    //   var start = 10 * (this.cur_page - 1) + 1;
+    //   var end = 10 * this.cur_page;
+    //   var data = []
+    //   for (let i = 0; i < this.tableData.length; i++) {
+    //     if (i >= (start - 1) && i <= (end - 1)) {
+    //       data.push(this.tableData[i])
+    //     }
+    //   }
+    //   this.tableVisibleData = data;
+    // },
   },
   watch: {
     filter: {
