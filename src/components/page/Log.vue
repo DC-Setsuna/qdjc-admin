@@ -182,6 +182,10 @@ export default {
       this.axios.post(this.api + '/selectmsg', this.form).then((response) => {
         console.log(response.data);
         this.tableVisibleData = response.data.data;
+        if(this.tableVisibleData != '' || this.tableVisibleData != null){
+          for (let i = 0;i < this.tableVisibleData.length;i++)
+            this.tableVisibleData[i].log_TIMESTAMP = this.tableVisibleData[i].log_TIMESTAMP.substring(0,19)
+        }
         this.total = response.data.number;
         // this.setVisibleData();
       })
