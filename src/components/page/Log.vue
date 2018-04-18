@@ -14,7 +14,7 @@
         <div>
           <el-form :inline="true" :model="filter" size="mini">
             <el-form-item label="时间">
-              <el-date-picker v-model="filter.LOG_TIMESTAMP" type="datetimerange" :picker-options="pickerOptions" value-format="yyyy-MM-dd hh:mm:ss" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" align="right">
+              <el-date-picker v-model="filter.LOG_TIMESTAMP" type="datetimerange" :picker-options="pickerOptions" format="yyyy-MM-dd HH:mm:ss"  value-format="yyyy-MM-dd HH:mm:ss" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" align="right">
               </el-date-picker>
             </el-form-item>
             <div>
