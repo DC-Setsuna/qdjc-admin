@@ -240,23 +240,34 @@ export default {
     	this.editVisible = true;
     },
     handleDelete(index, row) {
-    	this.axios({
-    		method: 'delete',
-    		url: this.api + '/delete',
-    		data: row
-    	}).then((response) => {
-    		if (response.data.code === 200) {
-    			this.getPage();
-    			this.getData();
-    			this.$message({
-    				message: '删除成功!',
-    				type: 'success'
-    			})
-    		} 
-    		if (response.data.code === 400) {
-    			this.$message.error('删除出现错误！');
-    		}
-    	})
+      this.$confirm('此操作将删除该条记录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.axios({
+            method: 'delete',
+            url: this.api + '/delete',
+            data: row
+          }).then((response) => {
+            if (response.data.code === 200) {
+              this.getPage();
+              this.getData();
+              this.$message({
+                message: '删除成功!',
+                type: 'success'
+              })
+            }
+            if (response.data.code === 400) {
+              this.$message.error('删除出现错误！');
+            }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      })
     },
     handleDetail(index, row) {
       this.detail = row;
