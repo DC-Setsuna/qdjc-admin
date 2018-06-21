@@ -14,16 +14,13 @@
         <div style="padding-left: 20px;">
         	<table width="500" cellspacing="0" cellpadding="3">
         	<tr align="left" style="background-color:#eee;">
-        		<th>Name</th>
-        		<th>Status</th>
+        		<th>name</th>
+        		<th>status</th>
         	</tr>
         	<tr>
-        		<td>DDXPQMGR</td>
-        		<td style="color: #0cdb1e;"><i class="el-icon-loading"></i>Running</td>
-        	</tr>
-        	<tr>
-        		<td>MDXPQMGR</td>
-        		<td style="color: #0cdb1e;"><i class="el-icon-loading"></i>Running</td>
+        		<td>{{ qmgr.name }}</td>
+        		<td v-if="this.qmgr.status == 'running'" style="color: #0cdb1e;"><i class="el-icon-loading"></i>Running</td>
+                <td v-else>disable</td>
         	</tr>
         </table>
         </div>
@@ -38,43 +35,26 @@
         			<th>Listener Status</th>
         		</tr>
         		<tr>
-        			<td>LISTENER.TCP</td>
-        			<td>1414</td>
-        			<td style="color: #0cdb1e;"><i class="el-icon-loading"></i>Running</td>
+        			<td>{{listener.name}}</td>
+        			<td>{{listener.port}}</td>
+                    <td v-if="this.listener.status == 'running'" style="color: #0cdb1e;"><i class="el-icon-loading"></i>Running</td>
+                <td v-else>disable</td>
         		</tr>
         	</table>
         </div>
       </el-collapse-item>
-      <el-collapse-item title="Queens">
+      <el-collapse-item title="Queue">
         <div style="padding-left:20px;">
         	<table width="500" cellspacing="0" cellpadding="3">
         		<tr align="left" style="background-color:#eee;">
-        			<th>Queue Manager</th>
         			<th>Name</th>
         			<th>Type</th>
         			<th>Depth</th>
         		</tr>
-        		<tr>
-        			<td rowspan="2">DDXPQMGR</td>
-        			<td>MDXP.INNER.REQUEST.INPUT</td>
-        			<td>Local</td>
-        			<td>20000</td>
-        		</tr>
-        		<tr>
-        			<td>MDXP.INNER.REQUEST.OUTPUT</td>
-        			<td>Local</td>
-        			<td>10000</td>
-        		</tr>
-        		<tr>
-        			<td rowspan="2">MDXPQMGR</td>
-        			<td>MDXP.INNER.REQUEST.INPUT</td>
-        			<td>Local</td>
-        			<td>0</td>
-        		</tr>
-        		<tr>
-        			<td>MDXP.INNER.REQUEST.OUTPUT</td>
-        			<td>Remote</td>
-        			<td>0</td>
+        		<tr v-for="item in queue">
+        			<td>{{item.name}}</td>
+        			<td>{{item.type}}</td>
+        			<td>{{item.currentdepth}}</td>
         		</tr>
         	</table>
         </div>
@@ -86,8 +66,51 @@
 export default {
   data() {
     return {
-
+        api: this.$store.state.api,
+        qmgr: {
+            name: '',
+            status: ''
+        },
+        listener: {
+            name: '',
+            port: '',
+            status: ''
+        },
+        queue: []
     }
+  },
+  methods: {
+    getManagers() {
+        this.axios.get(this.api + '/api/mqadmin/qmgr').then((response) => {
+            this.qmgr.name = response.data.data['qmgr'][0]['name']
+            if (response.data.data['qmgr'][0]['state'] === 'running') {
+                this.qmgr.status = 'running'
+            } else {
+                this.qmgr.status = 'disabled'
+            }
+        })
+    },
+    getListeners() {
+        this.axios.get(this.api + '/api/mqadmin/qmgr/listener').then((response) => {
+            this.listener.name = response.data.data[0]['name']
+            this.listener.port = response.data.data[0]['port']
+            if (response.data.data[0]['status'] === 'MQSVC_STATUS_RUNNING') {
+                this.listener.status = 'running'
+            } else {
+                this.listener.status = 'disable'
+            }
+        })
+    },
+    getQueens() {
+        this.axios.get(this.api + '/api/mqadmin/qmgr/queue').then((response) => {
+            this.queue = response.data.data
+        })
+    }
+  },
+  created: function() {
+    this.getManagers()
+    this.getListeners()
+    this.getQueens()
   }
 }
 
