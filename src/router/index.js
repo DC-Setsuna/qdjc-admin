@@ -7,6 +7,7 @@ import serviceAdmin from '@/components/page/ServiceAdmin'
 import log from '@/components/page/Log'
 import mqAdmin from '@/components/page/MqAdmin'
 import wsAdmin from '@/components/page/WsAdmin'
+import system from '@/components/page/System'
 
 Vue.use(Router)
 
@@ -39,6 +40,10 @@ export default new Router({
         {
           path: "/ws-admin",
           component: wsAdmin
+        },
+        {
+          path: "/system",
+          component: system
         }
       ]
     },

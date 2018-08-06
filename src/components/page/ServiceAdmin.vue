@@ -6,7 +6,7 @@
         <el-breadcrumb-item>服务列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <el-button type="primary" icon="el-icon-plus" @click="add">新增</el-button>
+    <el-button type="primary" icon="el-icon-refresh" @click="add">数据同步</el-button>
     <div style="display: inline-block; width: 300px;">
       <el-input v-model="select_word" placeholder="筛选关键词" id="service-handle-input"></el-input>
     </div>
@@ -19,11 +19,11 @@
       <el-table-column prop="owner_ORG" label="所属平台"></el-table-column>
       <el-table-column prop="owner" label="服务名"></el-table-column>
       <el-table-column prop="type" label="服务类型"></el-table-column>
-      <el-table-column label="操作" width="218" fixed="right" :resizable="false">
+      <el-table-column label="操作" width="80" fixed="right" :resizable="false">
         <template scope="scope">
           <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <!-- <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -33,6 +33,10 @@
     </div>
     <el-dialog title="详细信息" :visible.sync="detailVisible" :modal="false">
       <table border="0" class="detail-message" cellspacing="3" cellpadding="3">
+        <tr>
+          <th> key </th>
+          <th> value </th>
+        </tr>
         <tr v-for="(value, key) in detail">
           <td width="230">
             {{key}}
@@ -188,7 +192,16 @@ export default {
       })
     },
     add() {
-      this.addVisible = true;
+      // this.addVisible = true;
+      const loading = this.$loading({
+          lock: true,
+          text: '数据同步中',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        setTimeout(() => {
+          loading.close();
+        }, 2000);
     },
     search() {
       this.axios.get(this.api + '/selectservicebycondition', { params: { key: this.select_word } }).then((response) => {
@@ -336,8 +349,15 @@ export default {
   margin: 0 auto;
 }
 
-.detail-message td {
-  border: 1px solid #ddd;
+.detail-message tr td{
+  border-bottom: 1px solid #ddd;
+}
+
+.detail-message th{
+  border-bottom: 1px solid black;
+  text-align: left;
+  background-color: #409EFF;
+  color: #fff;
 }
 
 </style>

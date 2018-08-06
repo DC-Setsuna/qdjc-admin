@@ -6,8 +6,8 @@
         <el-breadcrumb-item>安全管理平台</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <el-collapse>
-      <el-collapse-item>
+    <el-collapse v-model="activeNames">
+      <el-collapse-item name="1">
         <template slot="title">
           Local Queue Managers<i class="header-icon el-icon-info"></i>
         </template>
@@ -26,7 +26,7 @@
         </div>
         
       </el-collapse-item>
-      <el-collapse-item title="Listeners 监听器">
+      <el-collapse-item title="Listeners 监听器" name="2">
         <div style="padding-left:20px;">
         	<table width="500" cellspacing="0" cellpadding="3">
         		<tr align="left" style="background-color:#eee;">
@@ -43,7 +43,7 @@
         	</table>
         </div>
       </el-collapse-item>
-      <el-collapse-item title="Queue">
+      <el-collapse-item title="Queue" name="3">
         <div style="padding-left:20px;">
         	<table width="500" cellspacing="0" cellpadding="3">
         		<tr align="left" style="background-color:#eee;">
@@ -76,12 +76,13 @@ export default {
             port: '',
             status: ''
         },
-        queue: []
+        queue: [],
+        activeNames: ['1','2','3']
     }
   },
   methods: {
     getManagers() {
-        this.axios.get(this.api + '/api/mqadmin/qmgr').then((response) => {
+        this.axios.get(this.api + '/api/Mqadmin/qmgr').then((response) => {
             this.qmgr.name = response.data.data['qmgr'][0]['name']
             if (response.data.data['qmgr'][0]['state'] === 'running') {
                 this.qmgr.status = 'running'
@@ -91,7 +92,7 @@ export default {
         })
     },
     getListeners() {
-        this.axios.get(this.api + '/api/mqadmin/qmgr/listener').then((response) => {
+        this.axios.get(this.api + '/api/Mqadmin/qmgr/listener').then((response) => {
             this.listener.name = response.data.data[0]['name']
             this.listener.port = response.data.data[0]['port']
             if (response.data.data[0]['status'] === 'MQSVC_STATUS_RUNNING') {
@@ -102,7 +103,7 @@ export default {
         })
     },
     getQueens() {
-        this.axios.get(this.api + '/api/mqadmin/qmgr/queue').then((response) => {
+        this.axios.get(this.api + '/api/Mqadmin/qmgr/queue').then((response) => {
             this.queue = response.data.data
         })
     }

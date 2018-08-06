@@ -8,6 +8,10 @@
       <i class="el-icon-menu"></i>
       <span slot="title">路由管理</span>
     </el-menu-item>
+    <el-menu-item index="system">
+      <i class="el-icon-menu"></i>
+      <span slot="title">系统用户</span>
+    </el-menu-item>
     <el-menu-item index="log">
       <i class="el-icon-setting"></i>
       <span slot="title">日志</span>
@@ -18,13 +22,11 @@
         <span>系统监控</span>
       </template>
       <el-menu-item-group>
-        <template slot="title">MQ监控</template>
-        <el-menu-item index="mq-admin">安全管理平台</el-menu-item>
+        <el-menu-item index="mq-admin">MQ监控</el-menu-item>
         <!-- <el-menu-item index="/">队列管理器状态</el-menu-item> -->
       </el-menu-item-group>
       <el-menu-item-group>
-        <template slot="title">WS监控</template>
-        <el-menu-item index="ws-admin">接入平台管理</el-menu-item>
+        <el-menu-item index="ws-admin">WS监控</el-menu-item>
         <!-- <el-menu-item index="/">队列管理器状态</el-menu-item> -->
       </el-menu-item-group>
     </el-submenu>
