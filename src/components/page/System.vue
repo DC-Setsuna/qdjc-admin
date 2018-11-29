@@ -21,13 +21,13 @@
       <el-table-column prop="sender" label="插入时间"></el-table-column>
       <el-table-column prop="receiver_ORG" label="上次修改时间"></el-table-column>
       <el-table-column prop="receiver" label="创建者"></el-table-column>
-      <!-- <el-table-column label="操作" width="218" fixed="right" :resizable="false">
+      <el-table-column label="操作" width="218" fixed="right" :resizable="false">
         <template scope="scope">
           <el-button size="mini" @click="handleDetail(scope.$index, scope.row)">详情</el-button>
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <div class="pagination">
       <el-pagination @current-change="handleCurrentChange" layout="prev, pager, next" :total="total" :page-size="10">
@@ -47,7 +47,7 @@
     	</span>
     </el-dialog>
     <el-dialog title="新增路由" :visible.sync="addVisible" :modal="false" custom-class="edit-dialog">
-      <!-- <table border="0" cellspacing="0" class="edit-route">
+      <table border="0" cellspacing="0" class="edit-route">
         <tr v-for="(value, key) in addData">
           <el-tag><td width="120">
             {{key}}
@@ -56,7 +56,7 @@
             <el-input v-model="addData[key]" size="mini"></el-input>
           </td>
         </tr>
-      </table> -->
+      </table>
       <el-form :model="addData" label-width="80px" :inline="true" size="mini">
 				<el-form-item label="服务编号">
           <el-input v-model="addData.SERVICE_CODE"></el-input>
@@ -107,7 +107,7 @@
     	</span>
     </el-dialog>
     <el-dialog title="编辑路由" :visible.sync="editVisible" :modal="false" custom-class="edit-dialog">
-    	<!-- <table class="edit-route" border="0" cellspacing="3" cellpadding="3">
+    	<table class="edit-route" border="0" cellspacing="3" cellpadding="3">
         <tr v-for="(value, key) in editData" class="edit-route-tr">
           <el-tag type="success" class="edit-route-td"><td width="120">
             {{key}}
@@ -116,7 +116,7 @@
           	<el-input v-model="editData[key]" size="mini"></el-input>
           </td>
         </tr>
-      </table> -->
+      </table>
       <el-form :model="addData" label-width="80px" :inline="true" size="mini">
         <el-form-item label="服务编号">
           <el-input v-model="editData.SERVICE_CODE"></el-input>

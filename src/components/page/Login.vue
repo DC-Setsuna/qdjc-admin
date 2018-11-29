@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="admin system" :visible="true" :show-close="false" width="600px">
+  <el-dialog title="管理运行平台管理系统" :visible="true" :show-close="false" width="600px">
     <el-form label-position="right" label-width="80px" :rules="loginRules" :model="formLabelLogin" ref="formLabelLogin">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="formLabelLogin.username" auto-complete="off" spellcheck="false"></el-input>
@@ -38,8 +38,13 @@ export default {
   },
   methods: {
     submit: function() {
-      localStorage.setItem('username', this.formLabelLogin.username);
-      this.$router.push('/service-admin');
+      if (this.formLabelLogin.username === 'admin' && this.formLabelLogin.password === 'admin') {
+        localStorage.setItem('username', this.formLabelLogin.username);
+        this.$router.push('/service-admin');
+      } else {
+        this.$message.error('用户名或密码错误')
+      }
+
     }
   }
 }

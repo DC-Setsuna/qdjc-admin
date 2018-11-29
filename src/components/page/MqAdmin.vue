@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item><i class="el-icon-location"></i>MQ监控</el-breadcrumb-item>
-        <el-breadcrumb-item>安全管理平台</el-breadcrumb-item>
+        <el-breadcrumb-item>综合管理平台</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <el-collapse v-model="activeNames">
